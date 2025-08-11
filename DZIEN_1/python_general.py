@@ -37,4 +37,16 @@ class TrainingLog:
     def filter(self,predicate:Callable[[Workout],bool]) -> 'TrainingLog':
         return TrainingLog(filter(predicate,self.workouts))
    
+# ____DANE____
+ws = [
+    Workout("2025-02-10","trail",38,1200,270),
+    Workout("2025-03-16","road",12,23,64),
+    Workout("2025-04-02","gym",0,0,30),
+    Workout("2025-04-26","trail",33,2100,265),
+    Workout("2025-05-06","road",21,60,112),
+    Workout("2025-05-21","trail",15,300,137),
+    Workout("2025-06-13","road",10,21,49),
+    Workout("2025-06-30","gym",0,0,55),
+    Workout("2025-07-26","trail",45,3400,550),
+]
 
