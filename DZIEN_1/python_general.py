@@ -63,3 +63,10 @@ total_climb = reduce(lambda acc,w:acc+(w.climb_m if w.kind in {"trail","road"} e
 sorted_ws = sorted(log.workouts,key=attrgetter("kind"))
 km_by_kind = {k:round(sum(w.distance_km for w in g),2) for k,g in groupby(sorted_ws,key=attrgetter("kind"))}
 
+
+# ____KOLEKCJE____
+kinds_counter = Counter(w.kind for w in log.workouts) #ile sesji z każdego typu biegu
+unique_days = {w.day for w in log.workouts} #ile różnych dni
+buckets = log.by_kind()
+
+#__program glowny_____
