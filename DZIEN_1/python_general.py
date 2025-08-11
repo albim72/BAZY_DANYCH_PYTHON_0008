@@ -50,3 +50,12 @@ ws = [
     Workout("2025-07-26","trail",45,3400,550),
 ]
 
+log = TrainingLog(ws)
+
+#___ funkcyjnie____
+#1->przeliczenie tempa (min/km) dla biegow z dystansem >0
+paces = list(map(lambda w:(w.day,round(w.duration_min/w.distance_km,2)),filter(lambda w:w.distance_km>0,log.workouts)))
+
+#2 -> reduce: całkowite przewyższenie trail+szosa
+total_climb = reduce(lambda acc,w:acc+(w.climb_m if w.kind in {"trail","road"} else 0),log.workouts,0)
+
