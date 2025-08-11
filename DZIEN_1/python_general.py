@@ -59,3 +59,7 @@ paces = list(map(lambda w:(w.day,round(w.duration_min/w.distance_km,2)),filter(l
 #2 -> reduce: całkowite przewyższenie trail+szosa
 total_climb = reduce(lambda acc,w:acc+(w.climb_m if w.kind in {"trail","road"} else 0),log.workouts,0)
 
+#3 -> groupby -  sumy wg typów
+sorted_ws = sorted(log.workouts,key=attrgetter("kind"))
+km_by_kind = {k:round(sum(w.distance_km for w in g),2) for k,g in groupby(sorted_ws,key=attrgetter("kind"))}
+
