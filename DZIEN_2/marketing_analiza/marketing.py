@@ -32,3 +32,15 @@ currencies_df = pd.DataFrame(currencies_rows)
 df = sales_df.merge(marketing_df,on=["date","country"],how="left")
 df = df.merge(currencies_df,on="date",how="left")
 df.head()
+
+
+#kowersja sprzedaży na USD/EUR w zależności od kraju
+def convert_sales(row):
+    if row["country"] == "USA":
+        return row["sales_pln"]/row["USD"],"USD"
+    elif row["country"] == "Germany":
+        return row["sales_pln"]/row["EUR"],"EUR"
+    else:
+        return row["sales_pln"],"PLN"
+    
+df[["sales_foreign","country"]] = df.apply(lambda r:pd.Series(convert_sales(r)),axis=1)
