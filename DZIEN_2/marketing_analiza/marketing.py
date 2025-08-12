@@ -44,3 +44,9 @@ def convert_sales(row):
         return row["sales_pln"],"PLN"
     
 df[["sales_foreign","country"]] = df.apply(lambda r:pd.Series(convert_sales(r)),axis=1)
+
+#Analiza NumPy: ROI(Return on Investment)
+sales_arr = df["sales_pln"].to_numpy()
+marketing_arr = df["marketing_spend_pln"].to_numpy()
+roi_arr = (sales_arr - marketing_arr)/marketing_arr
+df["ROI"] = np.round(roi_arr,2)
