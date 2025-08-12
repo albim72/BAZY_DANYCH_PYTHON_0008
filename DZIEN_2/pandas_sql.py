@@ -62,5 +62,28 @@ def init_db(db_path: Path):
 def main():
     conn = init_db(DB_PATH)
 
+    #proste SELECT
+    df_customers = pd.read_sql_query("SELECT * FROM customers", conn)
+    df_orders = pd.read_sql_query("SELECT * FROM orders", conn)
+
+    print(f"\n[Customers]\n{df_customers}\n")
+    print(f"\n[Orders]\n{df_orders}\n")
+
+    #JOIN + GOUP BY
+    q_join_agg = """
+    SELECT
+        c.country,
+        COUNT(o.order_id) AS n_orders,
+        ROUND(SUM(o.amount)) AS total_amount,
+        ROUND(AVG(o.amount)) AS avg_amount
+    FROM
+        customers AS c
+    LEFT JOIN orders o ON o.customer_id = c.customer_id
+    GROUP BY c.country
+    ORDER BY total_amount desc;
+    """
+
+    df_country_stats = pd.read_sql_query(q_join_agg, conn)
+    print(f"\n[Country Stats]\n{df_country_stats}\n")
 if __name__ == '__main__':
     main()
