@@ -50,3 +50,18 @@ sales_arr = df["sales_pln"].to_numpy()
 marketing_arr = df["marketing_spend_pln"].to_numpy()
 roi_arr = (sales_arr - marketing_arr)/marketing_arr
 df["ROI"] = np.round(roi_arr,2)
+
+#wykres porównujący ROI
+plt.figure(figsize=(8,5))
+for country in df["country"].unique():
+    subset = df[df["country"] == country]
+    plt.plot(subset["date"],subset["ROI"],marker="o",label="country")
+
+plt.title("ROI per country over time")
+plt.xlabel("Date")
+plt.ylabel("ROI")
+plt.grid(True)
+plt.legend(title="Country",loc="best")
+plt.tight_layout()
+plt.savefig("roi_plot.png")
+plt.show()
