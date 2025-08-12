@@ -98,12 +98,32 @@ def main():
 
     df_param = pd.read_sql_query(q_param, conn, params=(min_amount,))
     print(f"\n[Orders with amount >= {min_amount}]\n{df_param}\n")
-    
+
     #zpisanie DataFrame do bazy danych
-    dreturns_df = pd.DataFrame({
+    returns_df = pd.DataFrame({
     "return_id": [1,2,3,4,5,6],
     "order_id": [101,102,103,104,105,106],
     "reason": ["bad quality", "wrong size", "wrong color", "too expensive", "too cheap", "not delivered"]
     })
+
+    returns_df.to_sql("returns", conn, if_exists="replace", index=False)
+
+    #JOIN z nową tabelą
+    q_returns = """
+    SELECT
+        r.return_id,
+        r.reason,
+        o.order_id,
+        o.amount,
+        c.name
+    FROM
+        returns r
+    JOIN orders o ON o.order_id = r.order_id
+    JOIN customers c ON c.customer_id = o.customer_id
+    ORDER BY r.return_id
+    """
+
+    df_returns = pd.read_sql_query(q_returns, conn)
+    print(f"\n[Returns]\n{df_returns}\n")
 if __name__ == '__main__':
     main()
