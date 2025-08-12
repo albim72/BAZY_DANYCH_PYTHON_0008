@@ -85,5 +85,18 @@ def main():
 
     df_country_stats = pd.read_sql_query(q_join_agg, conn)
     print(f"\n[Country Stats]\n{df_country_stats}\n")
+
+    #zapytanie parametryzowane
+    min_amount = 200.0
+    q_param = """
+    SELECT o.order_id, c.name, o.order_date, o.amount 
+    FROM orders o
+        join customers c on c.customer_id = o.customer_id
+    where o.amount >= ?
+    order by o.amount desc
+    """
+
+    df_param = pd.read_sql_query(q_param, conn, params=(min_amount,))
+    print(f"\n[Orders with amount >= {min_amount}]\n{df_param}\n")
 if __name__ == '__main__':
     main()
