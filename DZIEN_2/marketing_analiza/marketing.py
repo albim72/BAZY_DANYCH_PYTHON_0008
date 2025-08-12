@@ -61,6 +61,18 @@ for c in df["country"].unique():
 
 plt.xlabel("Date")
 plt.ylabel("ROI")
+#wykres porównujący ROI
+plt.figure(figsize=(8,5))
+for c in df["country"].unique():
+    subset = df[df["country"] == c]
+    plt.plot(subset["date"], subset["ROI"], label=c)
+
+plt.xlabel("Date")
+plt.ylabel("ROI")
+plt.xticks(rotation=45)
+plt.title("ROI per country over time")
+plt.legend()
+plt.show()
 plt.title("ROI per country over time")
 plt.legend()
 plt.show()
