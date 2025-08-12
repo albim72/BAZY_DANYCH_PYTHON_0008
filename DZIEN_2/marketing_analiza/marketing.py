@@ -43,7 +43,9 @@ def convert_sales(row):
     else:
         return row["sales_pln"],"PLN"
     
-df[["sales_foreign","country"]] = df.apply(lambda r:pd.Series(convert_sales(r)),axis=1)
+# df[["sales_foreign","country"]] = df.apply(lambda r:pd.Series(convert_sales(r)),axis=1)
+df[["sales_foreign","currency"]] = df.apply(lambda r: pd.Series(convert_sales(r)), axis=1)
+
 
 #Analiza NumPy: ROI(Return on Investment)
 sales_arr = df["sales_pln"].to_numpy()
@@ -53,15 +55,12 @@ df["ROI"] = np.round(roi_arr,2)
 
 #wykres porównujący ROI
 plt.figure(figsize=(8,5))
-for country in df["country"].unique():
-    subset = df[df["country"] == country]
-    plt.plot(subset["date"],subset["ROI"],marker="o",label="country")
+for c in df["country"].unique():
+    subset = df[df["country"] == c]
+    plt.plot(subset["date"], subset["ROI"], label=c)
 
-plt.title("ROI per country over time")
 plt.xlabel("Date")
 plt.ylabel("ROI")
-plt.grid(True)
-plt.legend(title="Country",loc="best")
-plt.tight_layout()
-plt.savefig("roi_plot.png")
+plt.title("ROI per country over time")
+plt.legend()
 plt.show()
