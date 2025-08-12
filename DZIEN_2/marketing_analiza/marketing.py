@@ -27,3 +27,8 @@ for date_str,rates in currencies_data.items():
         "EUR":rates["EUR"]
     })
 currencies_df = pd.DataFrame(currencies_rows)
+
+#scalanie wszystkich danych
+df = sales_df.merge(marketing_df,on=["date","country"],how="left")
+df = df.merge(currencies_df,on="date",how="left")
+df.head()
