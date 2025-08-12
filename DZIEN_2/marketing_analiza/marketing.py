@@ -64,3 +64,9 @@ plt.ylabel("ROI")
 plt.title("ROI per country over time")
 plt.legend()
 plt.show()
+
+#wyniki
+print("\npełny DataFrame\n")
+print(df)
+print("\średni ROI dla każdego kraju")
+print(df.groupby("country")["ROI"].mean().round(2))
