@@ -29,7 +29,7 @@ def init_db(db_path: Path):
         
         
     """)
-    
+
     customers = [
         (1,"Anna Kowalska","PL"),
         (2,"John Smith","US"),
@@ -38,7 +38,7 @@ def init_db(db_path: Path):
         (5,"Marie Dubois","FR"),
         (6,"Natan Wote","GB"),
     ]
-    
+
     orders = [
         (101,1,"2025-01-10",245.0),
         (102,1,"2025-01-11",356.0),
@@ -52,9 +52,15 @@ def init_db(db_path: Path):
         (110,6,"2025-01-21",23.0),
         (111,6,"2025-01-27",450.0),
     ]
-    
+
     cur.executemany("INSERT INTO customers VALUES (?,?,?)", customers)
     cur.executemany("INSERT INTO orders VALUES (?,?,?,?)", orders)
-    
+
     conn.commit()
     return conn
+
+def main():
+    conn = init_db(DB_PATH)
+
+if __name__ == '__main__':
+    main()
