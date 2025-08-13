@@ -2,11 +2,11 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 # Dane logowania do MySQL
-MYSQL_USER = "user"
-MYSQL_PASS = "password"
+MYSQL_USER = "root"
+MYSQL_PASS = "abc123"
 MYSQL_HOST = "127.0.0.1"
 MYSQL_PORT = 3306
-MYSQL_DB   = "demo_db"
+MYSQL_DB   = "bazatestowa"
 
 # Tworzymy silnik SQLAlchemy
 engine = create_engine(
